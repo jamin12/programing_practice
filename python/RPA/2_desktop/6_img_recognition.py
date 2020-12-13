@@ -34,12 +34,47 @@ import pyautogui
 
 
 # 자동화 대상이 바로 보여지지 않는 경우
-file_menu_notepad = pyautogui.locateOnScreen("file_menu_notepad.png")
+# 1. 계속 기다리기
+# file_menu_notepad = pyautogui.locateOnScreen("file_menu_notepad.png")
 # if file_menu_notepad:
 #     pyautogui.click(file_menu_notepad)
 # else:
 #     print("not found")
-while file_menu_notepad is None:
-    file_menu_notepad = pyautogui.locateOnScreen("file_menu_notepad.png")
-pyautogui.click(file_menu_notepad)
+# while file_menu_notepad is None:
+#     file_menu_notepad = pyautogui.locateOnScreen("file_menu_notepad.png")
+# pyautogui.click(file_menu_notepad)
 
+
+# 2. 일정 시간동안 기다리기(Time out)
+import time
+import sys
+
+# timeout = 10 #10초대가
+# start = time.time() #시작 시간 설정
+# file_menu_notepad = None
+
+# while file_menu_notepad is None:
+#     file_menu_notepad = pyautogui.locateOnScreen("file_menu_notepad.png")
+#     end = time.time() #종료 시간 설정
+#     if end - start > timeout: #지정한 10초를 초과하면
+#         sys.exit()
+# pyautogui.click(file_menu_notepad)
+def find_target(img_file, timeout = 30):
+    start = time.time() #시작 시간 설정
+    target = None
+    while target is None:
+        target = pyautogui.locateOnScreen(img_file)
+        end = time.time() #종료 시간 설정
+        if end - start > timeout: #지정한 10초를 초과하면
+            break
+    return target
+
+def my_click(img_file, timeout = 30):
+    target = find_target(img_file,timeout)
+    if target:
+        pyautogui.click(target)
+    else:
+        print(f"[timeout{timeout}s] Target not Found ({img_file}) Terminate program")
+        sys.exit()
+
+my_click("file_menu_notepad.png", timeout=10)
