@@ -30,6 +30,6 @@ my_write("참 잘했어요")
 
 #저장 여부 설정
 w.close()
-pyautogui.sleep(5)
+pyautogui.sleep(2)
 dontsave = pyautogui.locateOnScreen("dontsave.png")
 pyautogui.click(dontsave)
