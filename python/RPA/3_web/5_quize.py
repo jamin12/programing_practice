@@ -25,9 +25,7 @@ def into_selenium(url):
     return broswer
 
 
-first_name = "나도"
-last_name = "코딩"
-subject = "퀴즈를 완료하였습니다"
+
 broswer = into_selenium("https://www.naver.com")
 #첫 페이지 핸들 정보 저장
 curr_handle = broswer.current_window_handle
@@ -68,15 +66,24 @@ elem.click()
 time.sleep(3)
 
 #contact from
-elem = broswer.find_element_by_xpath('//*[@id="leftmenuinnerinner"]/a[116]')
+# elem = broswer.find_element_by_xpath('//*[@id="leftmenuinnerinner"]/a[116]')
+# elem = broswer.find_element_by_link_text('Contact Form"')
+elem = broswer.find_element_by_xpath('//*[@id="leftmenuinnerinner"]/a[text() = "Contact Form"]')
+# elem = broswer.find_element_by_xpath('//*[@id="leftmenuinnerinner"]/a[contains(text(), "Contact")]')#일부 텍스트를 비교
+
 action = ActionChains(broswer)
 action.move_to_element(elem)
 elem.click()
 
+first_name = "나도"
+last_name = "코딩"
+country = "Canada"
+subject = "퀴즈를 완료하였습니다"
+
 time.sleep(3)
 broswer.find_element_by_xpath('//*[@id="fname"]').send_keys(first_name)
 broswer.find_element_by_xpath('//*[@id="lname"]').send_keys(last_name)
-broswer.find_element_by_xpath('//*[@id="country"]/option[2]').click()
+broswer.find_element_by_xpath('//*[@id="country"]/option[text()="{}"]'.format(country)).click()
 broswer.find_element_by_xpath('//*[@id="main"]/div[3]/textarea').send_keys(subject)
 
 time.sleep(5)
