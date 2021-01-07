@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine,Column,SMALLINT,BIGINT,String
+from sqlalchemy import create_engine,Column,SMALLINT,BIGINT,String,and_,or_
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -41,17 +41,25 @@ if __name__ == "__main__":
     #     user_test('d',24,'dd')
     # ])
 
-    #첫번 째 결과만 가져올수 있음
-    our_user = session.query(user_test).all()
+    #첫번 째 결과만 가져올수 있음 first()
+    # 리스트처럼 가져오기 가능 
+    # order_by sql 명령어 사용 가능
+    # our_user = session.query(user_test).all()[1:3]
     #이런식으로도 값 변경 가능
     # our_user.local = 'aaa'
     #변경한 값 확인
     # print(session.dirty)
     # 아직 커밋 안된 문장
     # print(session.new)
+    # our_user = session.query(user_test).filter(user_test.name == 'a')
+    # our_user = session.query(user_test).filter(user_test.name.in_(['a','d','c']))
+    # our_user = session.query(user_test).filter(~user_test.name.in_(['a','d','c']))
+    # our_user = session.query(user_test).filter(and_(user_test.name == 'a', user_test.age == '21'))
+    our_user = session.query(user_test).filter(or_(user_test.name == 'a', user_test.name == 'b'))
+
     for i in our_user:
         # print(i.name,i.age)
-        print(i.user_test,i.name)
+        print(i.age,i.name)
     session.commit()
 
 
