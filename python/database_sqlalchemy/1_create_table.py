@@ -23,6 +23,10 @@ class user_test(Base):
     def __repr__(self):
         return "<user_test('%s','%d','%s')>" %(self.name,self.age,self.local)
 
+class test_gi(Base):
+    __tablename__ = "test_gi"
+    name = Column(String(20),primary_key=True)
+    age = Column(SMALLINT)
 #테이블 생성
 def create_table(engine):
     Base.metadata.create_all(engine)
@@ -32,6 +36,7 @@ Session = sessionmaker(bind=engine)
 if __name__ == "__main__":
     a = user_test('a',21,'aa')
     session = Session()
+    create_table(engine)
     #세션은 커밋을 통해 데이터베이스에 명령을 전달한다 실패시 session.rolback을 통해 이유를 본다
     # 
     # session.add(a)
