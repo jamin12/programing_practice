@@ -85,13 +85,10 @@ class BaseMixin:
         """
         cond = []
         for key, val in kwargs.items():
-            print(key,val)
-            print()
             key = key.split("__")
             if len(key) > 2:
                 raise Exception("No 2 more dunders")
             col = getattr(cls, key[0])
-            print(col)
             if len(key) == 1: cond.append((col == val))
             elif len(key) == 2 and key[1] == 'gt': cond.append((col > val))
             elif len(key) == 2 and key[1] == 'gte': cond.append((col >= val))
