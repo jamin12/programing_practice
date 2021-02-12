@@ -60,7 +60,8 @@ if __name__ == "__main__":
     # our_user = session.query(user_test).filter(user_test.name.in_(['a','d','c']))
     # our_user = session.query(user_test).filter(~user_test.name.in_(['a','d','c']))
     # our_user = session.query(user_test).filter(and_(user_test.name == 'a', user_test.age == '21'))
-    our_user = session.query(user_test).filter(or_(user_test.name == 'a', user_test.name == 'b'))
+    # our_user = session.query(user_test).filter(or_(user_test.name == 'a', user_test.name == 'b'))
+    our_user = session.query(user_test).filter()
 
     for i in our_user:
         # print(i.name,i.age)
