@@ -71,9 +71,11 @@ async def access_control(request: Request, call_next):
                 if not api_key:
                     raise ex.NotFoundAccessKeyEx(api_key=qs_dict["key"])
                 mac = hmac.new(bytes(api_key.secret_key, encoding='utf8'), bytes(qs, encoding='utf-8'), digestmod='sha256')
+                print(mac)
                 d = mac.digest()
+                print(d)
                 validating_secret = str(base64.b64encode(d).decode('utf-8'))
-
+                print(validating_secret)
                 # if headers["secret"] != validating_secret:
                 #     raise ex.APIHeaderInvalidEx() 
 

@@ -1,9 +1,19 @@
 from sqlalchemy import create_engine,Column,SMALLINT,BIGINT,String,and_,or_
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+    DateTime,
+    func,
+    Enum,
+    Boolean,
+    ForeignKey,
+)
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker,relationship
 
 #데이터 베이스와 연결
-engine = create_engine("mysql+pymysql://root:1234@localhost:3306/database_practice",echo=False)
+engine = create_engine("mysql+pymysql://root:qwer1234@localhost:3306/sqlalchemy?charset=utf8mb4",echo=False)
 
 #ORM을 사용할 때 처리할 데이터베이스를 설명하고 해당 테이블에 매핑될 클래스를 정의하는 작업이 필요
 # 매핑 선언
@@ -20,13 +30,37 @@ class user_test(Base):
         self.age = age
         self.local = local
 
-    def __repr__(self):
-        return "<user_test('%s','%d','%s')>" %(self.name,self.age,self.local)
-
 class test_gi(Base):
     __tablename__ = "test_gi"
     name = Column(String(20),primary_key=True)
     age = Column(SMALLINT)
+
+
+class parents(Base):
+    __tablename__  = "parents"
+    p_id = Column(Integer, primary_key=True, index=True)
+    p_key = Column(String(40),nullable=True)
+    # user = relationship("children",back_populates="key")
+    user = relationship("children",backref="parents")
+
+    def __init__(self,p_key):
+        self.p_key = p_key
+
+class children(Base):
+    __tablename__  = "children"
+    c_id = Column(Integer, primary_key=True, index=True)
+    c_key = Column(String(40),nullable=True)
+    c_test = Column(String(20),nullable=True)
+    c_pid = Column(Integer,ForeignKey("parents.p_id"),nullable=False)
+    # key = relationship("parents",back_populates="user")
+
+    def __init__(self,c_key,c_test,c_pid):
+        self.c_key = c_key
+        self.c_test = c_test
+        self.c_pid = c_pid
+
+
+
 #테이블 생성
 def create_table(engine):
     Base.metadata.create_all(engine)
@@ -34,7 +68,7 @@ def create_table(engine):
 Session = sessionmaker(bind=engine)
 
 if __name__ == "__main__":
-    a = user_test('a',21,'aa')
+    # a = children('test3','test1-3',3)
     session = Session()
     create_table(engine)
     #세션은 커밋을 통해 데이터베이스에 명령을 전달한다 실패시 session.rolback을 통해 이유를 본다
@@ -61,11 +95,11 @@ if __name__ == "__main__":
     # our_user = session.query(user_test).filter(~user_test.name.in_(['a','d','c']))
     # our_user = session.query(user_test).filter(and_(user_test.name == 'a', user_test.age == '21'))
     # our_user = session.query(user_test).filter(or_(user_test.name == 'a', user_test.name == 'b'))
-    our_user = session.query(user_test).filter()
+    our_user = session.query(parents).filter(parents.p_id>0)
 
     for i in our_user:
         # print(i.name,i.age)
-        print(i.age,i.name)
+        print(i.user[0].c_test)
     session.commit()
 
 

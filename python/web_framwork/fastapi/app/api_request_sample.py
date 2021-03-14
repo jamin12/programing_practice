@@ -20,8 +20,8 @@ def hash_string(qs, secret_key):
 
 
 def sample_request():
-    access_key = "9a54f4b1-48fa-415f-a7bc-94bf205c-bd74-4526-96e4-3631b7794229"
-    secret_key = "b9u3FSmLTAI94xBKd3I0OVGzdJa2wXcyApoBZ5JU"
+    access_key = "ff7f8773-a41e-4198-91a6-3ce23715-7a41-43bd-83e1-2894cbb7c4e8"
+    secret_key = "chJhBK6BmTguKZ2H2yJP8Qm8KYOUm043wxYHgJ2x"
     cur_time = datetime.utcnow()+timedelta(hours=9)
     cur_timestamp = int(cur_time.timestamp())
     qs = dict(key= access_key, timestamp=cur_timestamp)
