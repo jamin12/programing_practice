@@ -71,7 +71,7 @@ class BaseMixin:
             raise Exception("Only one row is supposed to be returned, but got more than one.")
         result = query.first()
         if not session:
-            sess.close()
+            session.close()
         return result
 
     @classmethod

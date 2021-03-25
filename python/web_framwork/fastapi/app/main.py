@@ -18,8 +18,8 @@ from app.middlewares.token_validator import access_control
 from app.middlewares.trusted_hosts import TrustedHostMiddleware
 from app.routes import index, auth, users, services
 
-
 API_KEY_HEADER = APIKeyHeader(name="Authorization", auto_error=False)
+
 
 def create_app():
     """
@@ -44,11 +44,14 @@ def create_app():
         allow_headers=["*"],
     )
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=conf().TRUSTED_HOSTS, except_path=["/health"])
-
+    
     # 라우터 정의
     app.include_router(index.router)
     app.include_router(auth.router, tags=["Authentication"], prefix="/api")
-    app.include_router(services.router, tags=["Services"], prefix="/api")
+    if conf().DEBUG:
+        app.include_router(services.router, tags=["Services"], prefix="/api", dependencies=[Depends(API_KEY_HEADER)])
+    else:
+        app.include_router(services.router, tags=["Services"], prefix="/api")
     app.include_router(users.router, tags=["Users"], prefix="/api", dependencies=[Depends(API_KEY_HEADER)])
     return app
 

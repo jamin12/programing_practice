@@ -23,6 +23,9 @@ class Token(BaseModel):
     Authorization: str = None
 
 
+class KakaoMsgBody(BaseModel):
+    msg: str = None
+
 class MessageOk(BaseModel):
     message: str = Field(default="OK")
 
