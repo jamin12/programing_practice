@@ -51,7 +51,7 @@ btn_9.grid(row=2,column=2,sticky=N+E+W+S,padx=3,pady=3)
 btn_sub.grid(row=2,column=3,sticky=N+E+W+S,padx=3,pady=3)
 
 #4시작줄 
-btn_4 = Button(root,text="4",width = 5, height = 2)
+btn_4 = Button(root,text="가나다라",width = 5, height = 2)
 btn_5 = Button(root,text="5",width = 5, height = 2)
 btn_6 = Button(root,text="6",width = 5, height = 2)
 btn_add = Button(root,text="+",width = 5, height = 2)
