@@ -55,6 +55,7 @@ async def access_control(request: Request, call_next):
                 qs = str(request.query_params)
                 qs_list = qs.split("&")
                 session = next(db.session())
+                # 사용자 모드
                 if not config.conf().DEBUG:
                     try:
                         qs_dict = {qs_split.split("=")[0]: qs_split.split("=")[1] for qs_split in qs_list}
@@ -87,6 +88,7 @@ async def access_control(request: Request, call_next):
                     user_info = to_dict(api_key.users)
                     request.state.user = UserToken(**user_info)
 
+                # 개발 모드
                 else:
                     # Request User 가 필요함
                     if "authorization" in headers.keys():

@@ -35,10 +35,12 @@ async def get_all_services(request: Request):
 
 @router.post('kakao/send')
 async def send_kakao(request: Request, body: KakaoMsgBody):
-    token = op.environ.get("KAKAO_KEY", "KcND88YoOdrecLEsNj8YDggd5QUXvQaqmKVGAgorDKYAAAF4aadQ_Q")
+    #https://developers.kakao.com/docs/latest/ko/message/rest-api
+    #카카오톡 디벨롭에 들어가서 엑세스 키 받기
+    token = op.environ.get("KAKAO_KEY", "pe5beWa8Cqa9NxadbYhFFWbk3L5fpVIok13qfgo9dJkAAAF4ojsT1w")
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/x-www-form-urlencoded"}
 
-    body = dict(object_type="text", text=body.msg, link=dict(web_url="https://dingrr.com", mobile_url="https://dingrr.com"), button_title="지금 확인")
+    body = dict(object_type="text", text=body.msg, link=dict(web_url="", mobile_url=""), button_title="")
     data = {"template_object": json.dumps(body, ensure_ascii=False)}
 
     res = requests.post("https://kapi.kakao.com/v2/api/talk/memo/default/send", headers=headers, data=data)
