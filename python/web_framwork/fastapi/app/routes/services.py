@@ -37,7 +37,7 @@ async def get_all_services(request: Request):
 async def send_kakao(request: Request, body: KakaoMsgBody):
     #https://developers.kakao.com/docs/latest/ko/message/rest-api
     #카카오톡 디벨롭에 들어가서 엑세스 키 받기
-    token = op.environ.get("KAKAO_KEY", "pe5beWa8Cqa9NxadbYhFFWbk3L5fpVIok13qfgo9dJkAAAF4ojsT1w")
+    token = op.environ.get("KAKAO_KEY", "ff7f8773-a41e-4198-91a6-3ce23715-7a41-43bd-83e1-2894cbb7c4e8")
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/x-www-form-urlencoded"}
 
     body = dict(object_type="text", text=body.msg, link=dict(web_url="", mobile_url=""), button_title="")
