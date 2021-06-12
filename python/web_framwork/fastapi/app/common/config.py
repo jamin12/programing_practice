@@ -18,7 +18,7 @@ class Config:
 #개발 모드
 @dataclass
 class LocalConfig(Config):
-    DB_URL: str = "mysql+pymysql://root:1234@localhost:3306/waveblog?charset=utf8mb4"
+    DB_URL: str = "mysql+pymysql://root:1234@localhost:3306/fastapi?charset=utf8mb4"
 
     TRUSTED_HOSTS = ["*"]
     ALLOW_SITE = ["*"]
