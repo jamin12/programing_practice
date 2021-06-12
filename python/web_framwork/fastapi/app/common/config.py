@@ -14,10 +14,11 @@ class Config:
     DB_ECHO: bool = False
     DEBUG = False
 
+
 #개발 모드
 @dataclass
 class LocalConfig(Config):
-    DB_URL: str = "mysql+pymysql://root:qwer1234@localhost:3306/test_apiserver?charset=utf8mb4"
+    DB_URL: str = "mysql+pymysql://root:1234@localhost:3306/waveblog?charset=utf8mb4"
 
     TRUSTED_HOSTS = ["*"]
     ALLOW_SITE = ["*"]
@@ -31,7 +32,6 @@ class ProdConfig(Config):
     ALLOW_SITE = ["*"]
 
 
-
 def conf():
     """
     환경 불러오기
@@ -39,5 +39,3 @@ def conf():
     """
     config = dict(prod=ProdConfig(), local=LocalConfig())
     return config.get(environ.get("API_ENV", "local"))
-
-
