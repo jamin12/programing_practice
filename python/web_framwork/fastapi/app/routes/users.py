@@ -1,5 +1,6 @@
 from os import path as op
 from sys import path as sp
+
 sp.append(op.dirname(op.dirname(op.dirname(__file__))))
 
 from typing import List
@@ -52,7 +53,9 @@ async def get_api_keys(request: Request):
 
 
 @router.post('/apikeys', response_model=m.GetApiKeys)
-async def create_api_keys(request: Request, key_info: m.AddApiKey, session: Session = Depends(db.session)):
+async def create_api_keys(request: Request,
+                          key_info: m.AddApiKey,
+                          session: Session = Depends(db.session)):
     """
     API KEY 생성
     :param request:
@@ -62,7 +65,8 @@ async def create_api_keys(request: Request, key_info: m.AddApiKey, session: Sess
     """
     user = request.state.user
 
-    api_keys = ApiKeys.filter(session, user_id=user.id, status='active').count()
+    api_keys = ApiKeys.filter(session, user_id=user.id,
+                              status='active').count()
     if api_keys == MAX_API_KEY:
         raise ex.MaxKeyCountEx()
 
@@ -76,12 +80,18 @@ async def create_api_keys(request: Request, key_info: m.AddApiKey, session: Sess
             uid = uid_candidate
 
     key_info = key_info.dict()
-    new_key = ApiKeys.create(session, auto_commit=True, secret_key=s_key, user_id=user.id, access_key=uid, **key_info)
+    new_key = ApiKeys.create(session,
+                             auto_commit=True,
+                             secret_key=s_key,
+                             user_id=user.id,
+                             access_key=uid,
+                             **key_info)
     return new_key
 
 
 @router.put('/apikeys/{key_id}', response_model=m.GetApiKeyList)
-async def update_api_keys(request: Request, key_id: int, key_info: m.AddApiKey):
+async def update_api_keys(request: Request, key_id: int,
+                          key_info: m.AddApiKey):
     """
     API KEY User Memo Update
     :param request:
@@ -107,7 +117,8 @@ async def delete_api_keys(request: Request, key_id: int, access_key: str):
     return MessageOk()
 
 
-@router.get('/apikeys/{key_id}/whitelists', response_model=List[m.GetAPIWhiteLists])
+@router.get('/apikeys/{key_id}/whitelists',
+            response_model=List[m.GetAPIWhiteLists])
 async def get_api_keys(request: Request, key_id: int):
     user = request.state.user
     await check_api_owner(user.id, key_id)
@@ -116,7 +127,10 @@ async def get_api_keys(request: Request, key_id: int):
 
 
 @router.post('/apikeys/{key_id}/whitelists', response_model=m.GetAPIWhiteLists)
-async def create_api_keys(request: Request, key_id: int, ip: m.CreateAPIWhiteLists, session: Session = Depends(db.session)):
+async def create_api_keys(request: Request,
+                          key_id: int,
+                          ip: m.CreateAPIWhiteLists,
+                          session: Session = Depends(db.session)):
     user = request.state.user
     await check_api_owner(user.id, key_id)
     import ipaddress
@@ -129,7 +143,10 @@ async def create_api_keys(request: Request, key_id: int, ip: m.CreateAPIWhiteLis
     ip_dup = ApiWhiteLists.get(api_key_id=key_id, ip_addr=ip.ip_addr)
     if ip_dup:
         return ip_dup
-    ip_reg = ApiWhiteLists.create(session=session, auto_commit=True, api_key_id=key_id, ip_addr=ip.ip_addr)
+    ip_reg = ApiWhiteLists.create(session=session,
+                                  auto_commit=True,
+                                  api_key_id=key_id,
+                                  ip_addr=ip.ip_addr)
     return ip_reg
 
 

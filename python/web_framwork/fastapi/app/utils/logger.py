@@ -31,11 +31,9 @@ async def api_logger(request: Request, response=None, error=None):
             msg=str(error.ex),
         )
 
-    email = user.email.split("@") if user and user.email else None
     user_log = dict(
         client=request.state.ip,
         user=user.id if user and user.id else None,
-        email="**" + email[0][2:-1] + "*@" + email[1] if user and user.email else None,
     )
 
     log_dict = dict(
@@ -45,8 +43,8 @@ async def api_logger(request: Request, response=None, error=None):
         errorDetail=error_log,
         client=user_log,
         processedTime=str(round(t * 1000, 5)) + "ms",
-        datetimeUTC=datetime.utcnow().strftime(time_format),
-        datetimeKST=(datetime.utcnow() + timedelta(hours=9)).strftime(time_format),
+        datetimeKST=(datetime.utcnow() +
+                     timedelta(hours=9)).strftime(time_format),
     )
     if error and error.status_code >= 500:
         logger.error(json.dumps(log_dict))

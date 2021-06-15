@@ -1,9 +1,14 @@
-from routes import index, auth, users, services
-from middlewares.trusted_hosts import TrustedHostMiddleware
-from middlewares.token_validator import access_control
-from common.config import conf
-from database.conn import db
-from common.consts import EXCEPT_PATH_LIST, EXCEPT_PATH_REGEX
+from os import path as op
+from sys import path as sp
+
+sp.append(op.dirname(op.dirname(__file__)))
+
+from app.routes import index, auth, users, services
+from app.middlewares.trusted_hosts import TrustedHostMiddleware
+from app.middlewares.token_validator import access_control
+from app.common.config import conf
+from app.database.conn import db
+from app.common.consts import EXCEPT_PATH_LIST, EXCEPT_PATH_REGEX
 
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
