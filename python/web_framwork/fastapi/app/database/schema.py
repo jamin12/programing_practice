@@ -1,5 +1,6 @@
 from os import path as op
 from sys import path as sp
+
 sp.append(op.dirname(op.dirname(op.dirname(__file__))))
 
 from sqlalchemy import (
@@ -20,7 +21,10 @@ from app.database.conn import Base, db
 class BaseMixin:
     id = Column(Integer, primary_key=True, index=True)
     created_at = Column(DateTime, nullable=False, default=func.utc_timestamp())
-    updated_at = Column(DateTime, nullable=False, default=func.utc_timestamp(), onupdate=func.utc_timestamp())
+    updated_at = Column(DateTime,
+                        nullable=False,
+                        default=func.utc_timestamp(),
+                        onupdate=func.utc_timestamp())
 
     def __init__(self):
         self._q = None
@@ -28,7 +32,10 @@ class BaseMixin:
         self.served = None
 
     def all_columns(self):
-        return [c for c in self.__table__.columns if c.primary_key is False and c.name != "created_at"]
+        return [
+            c for c in self.__table__.columns
+            if c.primary_key is False and c.name != "created_at"
+        ]
 
     def __hash__(self):
         return hash(self.id)
@@ -68,7 +75,9 @@ class BaseMixin:
             query = query.filter(col == val)
 
         if query.count() > 1:
-            raise Exception("Only one row is supposed to be returned, but got more than one.")
+            raise Exception(
+                "Only one row is supposed to be returned, but got more than one."
+            )
         result = query.first()
         if not session:
             sess.close()
@@ -123,7 +132,8 @@ class BaseMixin:
                 col_name = a
                 is_asc = True
             col = self.cls_attr(col_name)
-            self._q = self._q.order_by(col.asc()) if is_asc else self._q.order_by(col.desc())
+            self._q = self._q.order_by(
+                col.asc()) if is_asc else self._q.order_by(col.desc())
         return self
 
     def update(self, auto_commit: bool = False, **kwargs):
@@ -132,7 +142,7 @@ class BaseMixin:
         ret = None
 
         self._session.flush()
-        if qs > 0 :
+        if qs > 0:
             ret = self._q.first()
         if auto_commit:
             self._session.commit()
