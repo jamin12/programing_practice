@@ -97,12 +97,24 @@ class BaseMixin:
             if len(key) > 2:
                 raise Exception("No 2 more dunders")
             col = getattr(cls, key[0])
-            if len(key) == 1: cond.append((col == val))
-            elif len(key) == 2 and key[1] == 'gt': cond.append((col > val))
-            elif len(key) == 2 and key[1] == 'gte': cond.append((col >= val))
-            elif len(key) == 2 and key[1] == 'lt': cond.append((col < val))
-            elif len(key) == 2 and key[1] == 'lte': cond.append((col <= val))
-            elif len(key) == 2 and key[1] == 'in': cond.append((col.in_(val)))
+            if len(key) == 1:
+                cond.append((col == val))
+                #gt 보다 큰 조건
+            elif len(key) == 2 and key[1] == 'gt':
+                cond.append((col > val))
+                #gte 보다 크거나 같은 조건
+            elif len(key) == 2 and key[1] == 'gte':
+                cond.append((col >= val))
+                #lt 보다 작은 조건
+            elif len(key) == 2 and key[1] == 'lt':
+                cond.append((col < val))
+                #lte 보다 작거나 같은 조건
+            elif len(key) == 2 and key[1] == 'lte':
+                cond.append((col <= val))
+                #in [1,2,3]등등 조건
+            elif len(key) == 2 and key[1] == 'in':
+                cond.append((col.in_(val)))
+            #예시 user.filter(id__gt = 3)
         obj = cls()
         if session:
             obj._session = session

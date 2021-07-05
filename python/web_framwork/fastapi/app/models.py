@@ -26,6 +26,7 @@ class Token(BaseModel):
 class KakaoMsgBody(BaseModel):
     msg: str = None
 
+
 class MessageOk(BaseModel):
     message: str = Field(default="OK")
 

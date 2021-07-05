@@ -14,7 +14,7 @@ from sqlalchemy.orm import sessionmaker, relationship
 
 #데이터 베이스와 연결
 engine = create_engine(
-    "mysql+pymysql://root:1234@localhost:3306/sqlalchemy?charset=utf8mb4",
+    "mysql+pymysql://root:1234@localhost:3306/database_practice?charset=utf8mb4",
     echo=False)
 
 #ORM을 사용할 때 처리할 데이터베이스를 설명하고 해당 테이블에 매핑될 클래스를 정의하는 작업이 필요
@@ -75,9 +75,9 @@ def create_table(engine):
 Session = sessionmaker(bind=engine)
 
 if __name__ == "__main__":
-    # a = children('test3','test1-3',3)
     session = Session()
     create_table(engine)
+    # a = children('test1', 'test1', 1)
     #세션은 커밋을 통해 데이터베이스에 명령을 전달한다 실패시 session.rolback을 통해 이유를 본다
     #
     # session.add(a)
@@ -102,9 +102,10 @@ if __name__ == "__main__":
     # our_user = session.query(user_test).filter(~user_test.name.in_(['a','d','c']))
     # our_user = session.query(user_test).filter(and_(user_test.name == 'a', user_test.age == '21'))
     # our_user = session.query(user_test).filter(or_(user_test.name == 'a', user_test.name == 'b'))
-    our_user = session.query(parents).filter(parents.p_id > 0)
-
-    for i in our_user:
-        # print(i.name,i.age)
-        print(i.user[0].c_test)
+    # our_user = session.query(children).filter(children.c_id > 0)
+    # our_user = session.query(parents)
+    # print(our_user)
+    # for i in our_user:
+    # print(i.name,i.age)
+    # print(i.parents.p_id)
     session.commit()
