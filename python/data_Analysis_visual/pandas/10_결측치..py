@@ -16,4 +16,4 @@ df.dropna() # 전체 데이터 중에서 nan 을 포함하는 데이터 삭제
 # how : any or all 하나라도 nan일떄 지우거나 전부 nan일떄 지우거나
 df.dropna(axis='index',how='any') #nan가 하나라도 있는 row 삭제
 df.dropna(axis='columns',how='any') #nan가 하나라도 있는 columns 삭제
-df.dropna(axis='columns',how='all') #nan가 하나라도 있는 columns 삭제
+df.dropna(axis='columns',how='all') #데이터 전체가  NaN인 경우에만 Column 삭제
