@@ -22,3 +22,4 @@ plt.ylabel('y축', color='#00aa00', loc='top') # top center bottom
 plt.plot(x,y)
 plt.xticks([1,2,3])
 plt.yticks([3,6,9,12])
+# %%
