@@ -34,4 +34,3 @@ df = pd.DataFrame(data,index=['1번','2번','3변','4번','5번','6번','7번','
 # data 중에서 원하는 컬럼만 선택하거나, 순서 변경 가능
 df = pd.DataFrame(data,columns=['이름','학교','키'])
 # print(df)
-
