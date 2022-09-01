@@ -1,0 +1,77 @@
+package randomN;
+
+import java.awt.Container;
+import java.awt.LayoutManager;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+public class Number extends JFrame {
+  Number() {
+    setTitle("Uncle");
+    setDefaultCloseOperation(3);
+    Container c = getContentPane();
+    c.setLayout((LayoutManager)null);
+    JLabel SRange = new JLabel("범위");
+    SRange.setSize(50, 20);
+    SRange.setLocation(73, 50);
+    c.add(SRange);
+    JTextField FirstRange = new JTextField();
+    FirstRange.setSize(50, 20);
+    FirstRange.setLocation(75, 70);
+    c.add(FirstRange);
+    JLabel Scribe = new JLabel("~");
+    Scribe.setSize(50, 20);
+    Scribe.setLocation(170, 70);
+    c.add(Scribe);
+    JTextField LastRange = new JTextField();
+    LastRange.setSize(50, 20);
+    LastRange.setLocation(225, 70);
+    c.add(LastRange);
+    JLabel SResult = new JLabel("결과");
+    SResult.setSize(50, 20);
+    SResult.setLocation(73, 125);
+    c.add(SResult);
+    
+    JLabel copy = new JLabel("더블클릭하면 복사가 됩니다");
+    copy.setSize(50, 20);
+    copy.setLocation(73, 125);
+    c.add(copy);
+    // 결과 텍스트
+    JTextArea Result = new JTextArea("Result", 1, 20);
+    Result.setEditable(false);
+    Result.setSize(200, 20);
+    Result.setLocation(75, 145);
+    // 복사
+    Result.addMouseListener(new MouseAdapter() {
+    	public void mouseClicked(MouseEvent e) {
+            if (e.getButton() == MouseEvent.NOBUTTON) {
+            	Result.copy();
+            } else if (e.getButton() == MouseEvent.BUTTON1) {
+            	Result.copy();
+            } else if (e.getButton() == MouseEvent.BUTTON2) {
+            	Result.copy();
+            } else if (e.getButton() == MouseEvent.BUTTON3) {
+            	Result.copy();
+            }
+    	}
+    });
+    c.add(Result);
+    JButton Reset = new JButton("재설정");
+    Reset.setSize(100, 25);
+    Reset.setLocation(125, 170);
+    Reset.addActionListener(new ResetAction(Result, FirstRange, LastRange));
+    c.add(Reset);
+    setSize(350, 250);
+    setVisible(true);
+  }
+  
+  public static void main(String[] args) {
+	  new Number();
+  }
+}

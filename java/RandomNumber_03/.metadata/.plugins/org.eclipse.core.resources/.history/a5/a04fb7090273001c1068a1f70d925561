@@ -1,0 +1,86 @@
+package randomN;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+
+import javax.swing.JButton;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+class ResetAction implements ActionListener {
+  private JTextArea mJTA;
+  
+  double Minrange = 0.0D;
+  
+  double MaxRange = 0.0D;
+  
+  double RandomNum;
+  
+  double decimal;
+  
+  double d;
+  
+  JTextField strMin;
+  
+  JTextField strMax;
+  
+  public ResetAction(JTextArea jTa, JTextField min, JTextField max) {
+    this.mJTA = jTa;
+    this.strMin = min;
+    this.strMax = max;
+  }
+  
+  public void actionPerformed(ActionEvent e) {
+	DecimalFormat dform = new DecimalFormat("#.#####");
+    JButton b = (JButton)e.getSource();
+    JTextArea ta = this.mJTA;
+    if (!this.strMin.getText().isEmpty() && !this.strMax.getText().isEmpty()) {
+    	try {
+    		this.Minrange = Double.valueOf(this.strMin.getText()).doubleValue();
+    		this.MaxRange = Double.valueOf(this.strMax.getText()).doubleValue();
+    	}catch (Exception er){
+    		this.Minrange = 0.0;
+    		this.MaxRange = 1.0;
+    		strMin.setText("0");
+    		strMax.setText("1");
+		}
+    } 
+    if (this.MaxRange < this.Minrange) {
+      double a = this.MaxRange;
+      this.MaxRange = this.Minrange;
+      this.Minrange = a;
+    } 
+    
+    if(this.MaxRange == this.Minrange) {
+    	this.MaxRange += 1;
+    	this.strMax.setText(Double.toString(this.MaxRange));
+    }
+    if (0.0D > this.MaxRange) {
+      do {
+        this.d = Math.random() * this.Minrange + this.MaxRange;
+        this.decimal = Double.parseDouble(String.format("%.5f", new Object[] { Double.valueOf(this.d) }));
+      } while (this.d < this.Minrange);
+      ta.setText(String.valueOf(Double.toString(this.decimal / 100.0D + 1.0D)) + "  " + "( " + this.decimal + " )");
+    } else if (0.0D > this.Minrange) {
+      if (b.getText().equals("Àç¼³Á¤")) {
+        double i = Math.random() * 2.0D;
+        if (i <= 1.0D) {
+          this.d = Math.random() * this.MaxRange;
+          this.decimal = Double.parseDouble(String.format("%.5f", new Object[] { Double.valueOf(this.d) }));
+          ta.setText(Double.toString(this.decimal / 100.0D + 1.0D));
+        } else {
+          this.d = Math.random() * this.Minrange;
+          this.decimal = Double.parseDouble(String.format("%.5f", new Object[] { Double.valueOf(this.d) }));
+          ta.setText(String.valueOf(Double.toString(this.decimal / 100.0D + 1.0D)) + "  " + "( " + this.decimal + " )");
+        } 
+      } 
+    } else {
+      do {
+        this.d = Math.random() * this.MaxRange + this.Minrange;
+        this.decimal = Double.parseDouble(String.format("%.5f", new Object[] { Double.valueOf(this.d) }));
+      } while (this.d > this.MaxRange);
+      ta.setText(Double.toString(this.decimal / 100.0D + 1.0D));
+    } 
+  }
+}

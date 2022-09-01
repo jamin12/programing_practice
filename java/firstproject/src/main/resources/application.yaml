@@ -1,0 +1,36 @@
+spring:
+    h2:
+        console:
+            enabled: true
+# 데이터베이스 고정 주소설정 
+    datasource:
+        generate-unique-name: false
+        url: jdbc:h2:mem:testdb
+    jpa:
+# 데이터베이스 자동 초기화
+        defer-datasource-initialization: true
+# 이쁘게 보여주기
+        properties:
+            hibernate:
+                format-sql: true
+# 파일 처리
+    servlet:
+        multipart:
+            enabled: true
+            location: c:\user\jamin\Desktop
+            max-File-Size: 10MB
+            max-Request-Size: 20MB
+            file-size-threshold: 1MB
+
+#로깅 설정
+logging:
+    level: 
+        org:
+            hibernate:
+                SQL: DEBUG
+                type:
+                    description:
+                        sql:
+                            BasicBinder: TRACE
+
+
