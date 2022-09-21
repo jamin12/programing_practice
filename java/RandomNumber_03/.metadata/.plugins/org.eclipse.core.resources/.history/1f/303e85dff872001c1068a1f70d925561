@@ -1,0 +1,51 @@
+import java.awt.Container;
+import java.awt.LayoutManager;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+public class Number extends JFrame {
+  Number() {
+    setTitle("Uncle");
+    setDefaultCloseOperation(3);
+    Container c = getContentPane();
+    c.setLayout((LayoutManager)null);
+    JLabel SRange = new JLabel(");
+    SRange.setSize(50, 20);
+    SRange.setLocation(73, 50);
+    c.add(SRange);
+    JTextField FirstRange = new JTextField();
+    FirstRange.setSize(50, 20);
+    FirstRange.setLocation(75, 70);
+    c.add(FirstRange);
+    JLabel Scribe = new JLabel("~");
+    Scribe.setSize(50, 20);
+    Scribe.setLocation(170, 70);
+    c.add(Scribe);
+    JTextField LastRange = new JTextField();
+    LastRange.setSize(50, 20);
+    LastRange.setLocation(225, 70);
+    c.add(LastRange);
+    JLabel SResult = new JLabel(");
+    SResult.setSize(50, 20);
+    SResult.setLocation(73, 125);
+    c.add(SResult);
+    JTextArea Result = new JTextArea("Result", 1, 20);
+    Result.setSize(200, 20);
+    Result.setLocation(75, 145);
+    c.add(Result);
+    JButton Reset = new JButton(");
+    Reset.setSize(100, 25);
+    Reset.setLocation(125, 170);
+    Reset.addActionListener(new ResetAction(Result, FirstRange, LastRange));
+    c.add(Reset);
+    setSize(350, 250);
+    setVisible(true);
+  }
+  
+  public static void main(String[] args) {
+    Number mf = new Number();
+  }
+}
