@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericMethod", "GenericMet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleThread", "SimpleThread\SimpleThread.csproj", "{A624D452-B70F-41FF-BB82-F788A72A2134}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testproejct", "testproejct\testproejct.csproj", "{EA587A6A-54E1-4BBD-887E-06533EB1D237}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{A624D452-B70F-41FF-BB82-F788A72A2134}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A624D452-B70F-41FF-BB82-F788A72A2134}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A624D452-B70F-41FF-BB82-F788A72A2134}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA587A6A-54E1-4BBD-887E-06533EB1D237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA587A6A-54E1-4BBD-887E-06533EB1D237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA587A6A-54E1-4BBD-887E-06533EB1D237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA587A6A-54E1-4BBD-887E-06533EB1D237}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
