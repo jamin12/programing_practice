@@ -1,9 +1,23 @@
-﻿int[,] m = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
-for (int i = 0; i < 3; i++)
+﻿class a
 {
-    for (int j = 0; j < 3; j++)
+    public a()
     {
-        Console.Write("{0} ",m[i, j]);
+
     }
-    Console.WriteLine();
+}
+
+class b
+{
+    public b()
+    {
+
+    }
+}
+
+public class Program { 
+    public static void cc(b bb)
+    {
+
+
+    }
 }

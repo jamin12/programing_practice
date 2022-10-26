@@ -7,24 +7,30 @@ using System.Threading.Tasks;
 
 namespace SimpleThread
 {
+    class a
+    {
+        public a()
+        {
+            int ii = 0;
+        }
+    }
+    class b : a
+    {
+        public b()
+        {
+            int jj = 0;
+        }
+    }
     internal class Program
     {
-        static void ThreadBody()
+        static void ThreadBody<T>(T a, T b)
         {
-            for(int i = 0; i < 5; i++)
-            {
-                Console.WriteLine(DateTime.Now.Second + " : " + i);
-                Thread.Sleep(1000);
-            }
+            Console.WriteLine("tt");
         }
         static void Main(string[] args)
         {
-            ThreadStart ts = new ThreadStart(ThreadBody);
-            Thread t = new Thread(ts);
-            Console.WriteLine("*** Start of Main");
-            t.Start();
-            t.Join();
-            Console.WriteLine("*** End of Main");
+            a bb= new a();
+            ThreadBody<int>(1,2);
         }
     }
 }
