@@ -143,7 +143,38 @@ namespace Chat
 
         private void DisConnect()
         {
-            throw new NotImplementedException();
+            ClientCon = false;
+            txtMessage.Enabled = false;
+            txtMessage.Clear();
+
+            btnSend.Enabled = false;
+            tsddbtnConn.Enabled = true;
+            tsddbtnDisconn.Enabled = false;
+
+            if (myRead != null)
+            {
+                myRead.Close();
+            }
+            if (myWrite != null)
+            {
+                myWrite.Close();
+            }
+            if (myStream != null)
+            {
+                myStream.Close();
+            }
+            if (ServerClient != null)
+            {
+                ServerClient.Close();
+            }
+            if (Server != null)
+            {
+                Server.Stop();
+            }
+            if (myReader != null)
+            {
+                myReader.Abort();
+            }
         }
 
         private void clientConnection()
@@ -177,6 +208,41 @@ namespace Chat
 
         private void ServerStop()
         {
+            Start = false;
+            txtMessage.Enabled = false;
+            txtMessage.Clear();
+
+            btnSend.Enabled = false;
+            tsddbtnConn.Enabled = true;
+            tsddbtnDisconn.Enabled = false;
+
+            cbServer.Enabled = true;
+            ClientCon = false;
+
+            if(myRead != null)
+            {
+                myRead.Close();
+            }
+            if(myWrite != null)
+            {
+                myWrite.Close();
+            }
+            if(myStream != null)
+            {
+                myStream.Close();
+            }
+            if (ServerClient != null)
+            {
+                ServerClient.Close();
+            }
+            if(Server != null)
+            {
+                Server.Stop();
+            }
+            if(myReader != null)
+            {
+                myReader.Abort();
+            }
 
         }
 
@@ -221,6 +287,7 @@ namespace Chat
                         {
                             if (msg.Length > 0)
                             {
+                                // TODO: invoke 공부
                                 Invoke(AddText, Smsg[0] + " : " + Smsg[1]);
                             }
                             tsslblTime.Text = "마지막으로 받은 시각 : " + Smsg[2];
@@ -307,12 +374,24 @@ namespace Chat
             if (TextChange == false)
             {
                 TextChange = true;
-                myWrite.WriteLine("s001" + "&" + "상대방이 메시지를 입력중입니다." + "&" + "");
+                myWrite.WriteLine("S001" + "&" + "상대방이 메시지를 입력중입니다." + "&" + "");
                 myWrite.Flush();
             }
             else if (txtMessage.Text == "" && TextChange == true)
             {
                 TextChange = false;
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                ServerStop();
+            }
+            catch
+            {
+                DisConnect();
             }
         }
 
