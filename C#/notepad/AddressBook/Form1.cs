@@ -8,19 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace notepad
+namespace AddressBook
 {
-    public partial class Form3 : Form
+    public partial class Form1 : Form
     {
-        public Form3()
+        public Form1()
         {
             InitializeComponent();
         }
 
-        private void Form3_Load(object sender, EventArgs e)
+        private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            label4.Text += SystemInformation.UserName;
-            label5.Text += SystemInformation.ComputerName;
+
         }
     }
 }

@@ -34,7 +34,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.chkCase = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.s = new System.Windows.Forms.RadioButton();
+            this.rdBtnUp = new System.Windows.Forms.RadioButton();
             this.rdBtnDown = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -54,6 +54,7 @@
             this.txtWord.Name = "txtWord";
             this.txtWord.Size = new System.Drawing.Size(366, 25);
             this.txtWord.TabIndex = 1;
+            this.txtWord.TextChanged += new System.EventHandler(this.txtWord_TextChanged);
             // 
             // btnOk
             // 
@@ -87,7 +88,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.s);
+            this.groupBox1.Controls.Add(this.rdBtnUp);
             this.groupBox1.Controls.Add(this.rdBtnDown);
             this.groupBox1.Location = new System.Drawing.Point(183, 74);
             this.groupBox1.Name = "groupBox1";
@@ -96,16 +97,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "방향";
             // 
-            // s
+            // rdBtnUp
             // 
-            this.s.AutoSize = true;
-            this.s.Location = new System.Drawing.Point(38, 24);
-            this.s.Name = "s";
-            this.s.Size = new System.Drawing.Size(58, 19);
-            this.s.TabIndex = 6;
-            this.s.TabStop = true;
-            this.s.Text = "위쪽";
-            this.s.UseVisualStyleBackColor = true;
+            this.rdBtnUp.AutoSize = true;
+            this.rdBtnUp.Location = new System.Drawing.Point(38, 24);
+            this.rdBtnUp.Name = "rdBtnUp";
+            this.rdBtnUp.Size = new System.Drawing.Size(58, 19);
+            this.rdBtnUp.TabIndex = 6;
+            this.rdBtnUp.TabStop = true;
+            this.rdBtnUp.Text = "위쪽";
+            this.rdBtnUp.UseVisualStyleBackColor = true;
             // 
             // rdBtnDown
             // 
@@ -142,12 +143,12 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtWord;
-        private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.CheckBox chkCase;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton rdBtnDown;
-        private System.Windows.Forms.RadioButton s;
+        public System.Windows.Forms.TextBox txtWord;
+        public System.Windows.Forms.Button btnOk;
+        public System.Windows.Forms.Button btnCancel;
+        public System.Windows.Forms.CheckBox chkCase;
+        public System.Windows.Forms.RadioButton rdBtnDown;
+        public System.Windows.Forms.RadioButton rdBtnUp;
     }
 }

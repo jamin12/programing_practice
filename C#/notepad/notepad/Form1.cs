@@ -16,6 +16,7 @@ namespace notepad
         private Boolean txtNoteChange; // 내용 변경 확인
         private String fWord; // 찾기 문자열
         private Form2 frm2; // 찾기 폼
+        private Form3 fr3;
         public Form1()
         {
             InitializeComponent();
@@ -128,7 +129,7 @@ namespace notepad
         private void 다른이름으로저장AToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult dir = saveFileDialog1.ShowDialog();
-            if(dir == DialogResult.Yes)
+            if (dir == DialogResult.Yes)
             {
                 String str = saveFileDialog1.FileName;
                 StreamWriter sw = new StreamWriter(str, false, System.Text.Encoding.Default);
@@ -148,7 +149,7 @@ namespace notepad
             {
                 var msg = Text + " 파일 내용이 변경되었습니다.\r\n변경된 내용을 저장하시겠습니까?";
                 DialogResult dir = MessageBox.Show(msg, "메모장", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                if(dir == DialogResult.Yes)
+                if (dir == DialogResult.Yes)
                 {
                     txtSave();
                     Close();
@@ -170,10 +171,110 @@ namespace notepad
         private void 글꼴ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult dir = fontDialog1.ShowDialog();
-            if(dir == DialogResult.OK)
+            if (dir == DialogResult.OK)
             {
                 txtNote.Font = fontDialog1.Font;
             }
+        }
+
+        private void 실행취소UToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            txtNote.Undo();
+        }
+
+        private void 잘라내기TToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            txtNote.Cut();
+        }
+
+        private void 복사PToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            txtNote.Copy();
+        }
+
+        private void 붙여넣기PToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            txtNote.Paste();
+        }
+
+        private void 삭제LToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            txtNote.SelectedText = "";
+        }
+
+        private void 모두선택AToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            txtNote.SelectAll();
+        }
+
+        private void 시간날짜DToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String time = DateTime.Now.ToShortDateString();
+            String day = DateTime.Now.ToShortDateString();
+            txtNote.AppendText(time + " : " + day);
+        }
+
+        private void 메모장정보AToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fr3 = new Form3();
+            fr3.ShowDialog();
+        }
+
+        private void 찾기FToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!(frm2 == null || !frm2.Visible))
+            {
+                frm2.Focus();
+                return;
+            }
+            frm2 = new Form2();
+            if (txtNote.SelectionLength != 0)
+            {
+                frm2.txtWord.Text = txtNote.SelectedText;
+            }
+            else
+            {
+                MessageBox.Show("텍스트를 선택하세요");
+                return;
+            }
+            frm2.btnOk.Click += new System.EventHandler(btnOk_Click);
+            frm2.Show();
+        }
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            var updown = -1;
+            var str = txtNote.Text;
+            var findWord = frm2.txtWord.Text;
+
+            if (!frm2.chkCase.Checked)
+            {
+                str = str.ToUpper();
+                findWord = findWord.ToUpper();
+            }
+
+            if (frm2.rdBtnUp.Checked)
+            {
+                if (txtNote.SelectionStart != 0)
+                {
+                    updown = str.LastIndexOf(findWord, txtNote.SelectionStart - 1);
+                }
+            }
+            else
+            {
+                updown = str.IndexOf(findWord, txtNote.SelectionStart + txtNote.SelectionLength);
+            }
+
+            if (updown == -1)
+            {
+                MessageBox.Show("더 이상 찾는 문자열이 없습니다.", "찾기", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            txtNote.Select(updown, findWord.Length);
+            fWord = frm2.txtWord.Text;
+            txtNote.Focus();
+            txtNote.ScrollToCaret();
         }
     }
 }

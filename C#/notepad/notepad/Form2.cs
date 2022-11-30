@@ -19,7 +19,19 @@ namespace notepad
 
         private void button2_Click(object sender, EventArgs e)
         {
+            Close();
+        }
 
+        private void txtWord_TextChanged(object sender, EventArgs e)
+        {
+            if(txtWord.Text == "")
+            {
+                btnOk.Enabled = false; // 버튼 비활성화
+            }
+            else
+            {
+                btnOk.Enabled = true; // 버튼 활성화
+            }
         }
     }
 }
