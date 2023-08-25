@@ -1,0 +1,120 @@
+version: '3'
+services:
+  zookeeper-1:
+    hostname: zookeeper1
+    image: confluentinc/cp-zookeeper:7.4.0
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 12181
+      ZOOKEEPER_DATA_DIR: /zookeeper/data
+      ZOOKEEPER_SERVERS: zookeeper1:22888:23888;zookeeper2:32888:33888;zookeeper3:42888:43888
+    ports:
+      - "12181:12181"
+      - "22888:22888" # 주키퍼 서버들이 이 서버와 통신할 떄 사용하는 포트
+      - "23888:23888" # 리더를 선출하는 포트 주키퍼 앙상블 내에서 리더가 선출될 때 이 포트를 사용하여 통신
+    volumes:
+      - ./zookeeper/data/1:/zookeeper/data
+
+  zookeeper-2:
+    hostname: zookeeper2
+    image: confluentinc/cp-zookeeper:7.4.0
+    environment:
+      ZOOKEEPER_SERVER_ID: 2
+      ZOOKEEPER_CLIENT_PORT: 22181
+      ZOOKEEPER_DATA_DIR: /zookeeper/data
+      ZOOKEEPER_SERVERS: zookeeper1:22888:23888;zookeeper2:32888:33888;zookeeper3:42888:43888
+    ports:
+      - "22181:22181"
+      - "32888:32888"
+      - "33888:33888"
+    volumes:
+      - ./zookeeper/data/2:/zookeeper/data
+
+  zookeeper-3:
+    hostname: zookeeper3
+    image: confluentinc/cp-zookeeper:7.4.0
+    environment:
+      ZOOKEEPER_SERVER_ID: 3
+      ZOOKEEPER_CLIENT_PORT: 32181
+      ZOOKEEPER_DATA_DIR: /zookeeper/data
+      ZOOKEEPER_SERVERS: zookeeper1:22888:23888;zookeeper2:32888:33888;zookeeper3:42888:43888
+    ports:
+      - "32181:32181"
+      - "42888:42888"
+      - "43888:43888"
+    volumes:
+      - ./zookeeper/data/3:/zookeeper/data
+
+  kafka-1:
+    image: confluentinc/cp-kafka:7.4.0
+    hostname: kafka1
+    depends_on:
+      - zookeeper-1
+      - zookeeper-2
+      - zookeeper-3
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper1:12181,zookeeper2:22181,zookeeper3:32181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:19092,PLAINTEXT_HOST://127.0.0.1:9092
+      KAFKA_LISTENERS: PLAINTEXT://:19092,PLAINTEXT_HOST://:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_LOG_DIRS: /kafka
+    ports:
+      - "9092:9092"
+    volumes:
+      - ./kafka/logs/1:/kafka
+
+  kafka-2:
+    image: confluentinc/cp-kafka:7.4.0
+    hostname: kafka2
+    depends_on:
+      - zookeeper-1
+      - zookeeper-2
+      - zookeeper-3
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper1:12181,zookeeper2:22181,zookeeper3:32181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:29092,PLAINTEXT_HOST://127.0.0.1:9093
+      KAFKA_LISTENERS: PLAINTEXT://:29092,PLAINTEXT_HOST://:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_LOG_DIRS: /kafka
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./kafka/logs/2:/kafka
+
+  kafka-3:
+    image: confluentinc/cp-kafka:7.4.0
+    hostname: kafka3
+    depends_on:
+      - zookeeper-1
+      - zookeeper-2
+      - zookeeper-3
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper1:12181,zookeeper2:22181,zookeeper3:32181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:39092,PLAINTEXT_HOST://127.0.0.1:9094
+      KAFKA_LISTENERS: PLAINTEXT://:39092,PLAINTEXT_HOST://:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_LOG_DIRS: /kafka
+    ports:
+      - "9094:9094"
+    volumes:
+      - ./kafka/logs/3:/kafka
+
+  akhq:
+    image: tchiotludo/akhq:latest
+    hostname: akhq
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+    environment:
+      AKHQ_CONFIGURATION: |
+        akhq:
+          connections:
+            kafka:
+              properties:
+                bootstrap.servers: kafka1:19092,kafka2:29092,kafka3:39092
+    ports:
+      - "8090:8080"
