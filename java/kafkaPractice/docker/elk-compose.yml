@@ -7,15 +7,15 @@ services: # docker-compose의 경우 docker 컨테이너로 수행될 서비스�
         source: ./elasticsearch/config/elasticsearch.yml
         target: /usr/share/elasticsearch/config/elasticsearch.yml
         read_only: true
-      - type: volume
-        source: ./elasticsearch
+      - type: bind
+        source: ./elasticsearch/data
         target: /usr/share/elasticsearch/data
     ports:
       - "9200:9200"
       - "9300:9300"
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      ELASTIC_PASSWORD: changeme
+      ELASTIC_PASSWORD: qwer1234
       # Use single node discovery in order to disable production mode and avoid bootstrap checks
       # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
       discovery.type: single-node
@@ -40,5 +40,16 @@ services: # docker-compose의 경우 docker 컨테이너로 수행될 서비스�
       - "19600:19600"
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    image: kibana:8.9.1
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=test-user
+      - ELASTICSEARCH_PASSWORD=qwer1234
+    ports:
+      - "5601:5601"
     depends_on:
       - elasticsearch

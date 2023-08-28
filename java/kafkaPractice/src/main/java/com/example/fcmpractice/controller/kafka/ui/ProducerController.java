@@ -1,13 +1,18 @@
 package com.example.fcmpractice.controller.kafka.ui;
 
-import java.util.UUID;
+import java.time.LocalDateTime;
 
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,12 +23,26 @@ import lombok.extern.slf4j.Slf4j;
 public class ProducerController {
 
 	private final KafkaTemplate<String, String> kafkaTemplate;
+	private final ObjectMapper objectMapper = new ObjectMapper();
 
-	@GetMapping("/publish/mytopic1")
-	public String publishSpringTopic1(@RequestParam String hihi) {
-		String message = "publish message to my_topic_1 " + UUID.randomUUID();
-
-		kafkaTemplate.send("testTopic", hihi);
+	@PostMapping("/publish/mytopic1")
+	public String publishSpringTopic1(@RequestBody TestDto testDto) throws JsonProcessingException {
+		String s = objectMapper.writeValueAsString(testDto);
+		kafkaTemplate.send("testTopic", s);
 		return "done";
+	}
+
+	@Getter
+	@NoArgsConstructor
+	public static class TestDto {
+		private Long id;
+		private String name;
+		private LocalDateTime localDateTime;
+
+		public TestDto(Long id, String name, LocalDateTime localDateTime) {
+			this.id = id;
+			this.name = name;
+			this.localDateTime = localDateTime;
+		}
 	}
 }
