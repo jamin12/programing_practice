@@ -1,0 +1,29 @@
+server:
+  port: 8088
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sseTest?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: energyx1!
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+springdoc:
+  model-and-view-allowed: true
+
+
