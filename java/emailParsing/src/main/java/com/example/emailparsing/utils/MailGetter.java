@@ -26,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class MailGetter {
-
 	public void getMain() {
 		Properties properties = new Properties();
 		properties.put("mail.imaps.host", "imap.naver.com");
@@ -38,7 +37,7 @@ public class MailGetter {
 
 		try {
 			Store store = emailSession.getStore("imaps");
-			store.connect("rudals9901", "");
+			store.connect("rudals9901", "[Wzqxec951]");
 
 			Folder emailFolder = store.getFolder("INBOX");
 			emailFolder.open(Folder.READ_ONLY);
