@@ -12,7 +12,6 @@ import jakarta.persistence.EntityManager;
 
 @Transactional
 @Service
-@Primary
 public class JpaMemberRepository implements MemberRepository {
 	private final EntityManager em;
 	public JpaMemberRepository(EntityManager em) {
