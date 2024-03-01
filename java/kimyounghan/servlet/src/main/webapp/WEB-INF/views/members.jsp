@@ -18,7 +18,7 @@
     <c:forEach var="item" items="${members}">
         <tr>
             <td>${item.id}</td>
-            <td>${item.username}</td>
+            <td>${item.userName}</td>
             <td>${item.age}</td>
         </tr>
     </c:forEach>

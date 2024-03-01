@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MemberRepository {
-    private static Map<Long, Member> store = new HashMap<>(); //static 사용
+    private static final Map<Long, Member> store = new HashMap<>(); //static 사용
     private static long sequence = 0L; //static 사용
     @Getter
     private static final MemberRepository instance = new MemberRepository();
