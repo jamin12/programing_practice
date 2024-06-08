@@ -1,11 +1,9 @@
 package com.example.jdbc.service;
 
-import java.sql.SQLException;
-
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.jdbc.domain.Member;
-import com.example.jdbc.repository.MemberRepositoryV3;
+import com.example.jdbc.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,11 +13,11 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class MemberServiceV3_3 {
-	private final MemberRepositoryV3 memberRepository;
+public class MemberServiceV4_1 {
+	private final MemberRepository memberRepository;
 
 	@Transactional
-	public void accountTransfer(String fromId, String toId, int money) throws SQLException {
+	public void accountTransfer(String fromId, String toId, int money) {
 		Member fromMember = memberRepository.findById(fromId);
 		Member toMember = memberRepository.findById(toId);
 		memberRepository.update(fromId, fromMember.getMoney() - money);
