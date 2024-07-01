@@ -1,0 +1,8 @@
+mybatis:
+  type-aliases-package: hello.itemservice.domain
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    hello.itemservice.repository.mybatis: trace

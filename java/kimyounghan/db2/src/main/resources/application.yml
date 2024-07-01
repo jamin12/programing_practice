@@ -4,4 +4,13 @@ spring:
   datasource:
     url: jdbc:h2:tcp://localhost/~/test
     username: sa
-    password: 1
+
+
+mybatis:
+  type-aliases-package: hello.itemservice.domain
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    hello.itemservice.repository.mybatis: trace
