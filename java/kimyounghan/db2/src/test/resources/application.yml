@@ -6,3 +6,10 @@ mybatis:
 logging:
   level:
     hello.itemservice.repository.mybatis: trace
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
