@@ -24,7 +24,9 @@ public class ItemServiceV2 implements ItemService {
 
 	@Override
 	public Item save(Item item) {
-		return itemRepositoryV2.save(item);
+		Item save = itemRepositoryV2.save(item);
+		update(10L, new ItemUpdateDto("qwer", 1111, 1112));
+		return save;
 	}
 
 	@Override
@@ -33,6 +35,7 @@ public class ItemServiceV2 implements ItemService {
 		item.setItemName(updateParam.getItemName());
 		item.setPrice(updateParam.getPrice());
 		item.setQuantity(updateParam.getQuantity());
+		throw new IllegalStateException("qwer");
 	}
 
 	@Override
