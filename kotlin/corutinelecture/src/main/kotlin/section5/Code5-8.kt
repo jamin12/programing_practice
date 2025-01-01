@@ -1,7 +1,7 @@
 package section5
 
 import kotlinx.coroutines.*
-import secion4.code1.getElapsedTime
+import section4.code1.getElapsedTime
 
 
 fun main() = runBlocking<Unit> {
