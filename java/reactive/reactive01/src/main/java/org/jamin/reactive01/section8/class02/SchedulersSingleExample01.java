@@ -22,8 +22,8 @@ public class SchedulersSingleExample01 {
 		return Flux.fromArray(new Integer[] {1, 3, 5, 7})
 			.publishOn(Schedulers.single())
 			.filter(data -> data > 3)
-			.doOnNext(data -> log.info(taskName, "filter {}", data))
+			.doOnNext(data -> log.info("filter {} {}", taskName, data))
 			.map(data -> data * 10)
-			.doOnNext(data -> log.info(taskName, "map {}", data));
+			.doOnNext(data -> log.info("map {} {}", taskName, data));
 	}
 }
