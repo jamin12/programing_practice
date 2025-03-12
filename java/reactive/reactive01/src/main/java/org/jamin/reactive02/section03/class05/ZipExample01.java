@@ -1,0 +1,25 @@
+package org.jamin.reactive02.section03.class05;
+
+import reactor.core.publisher.Flux;
+
+import java.time.Duration;
+
+import org.jamin.reactive02.utils.Logger;
+import org.jamin.reactive02.utils.TimeUtils;
+
+/**
+ * zip 기본 개념 예제
+ *  - 파라미터로 입력된 Publisher Sequence에서 emit된 데이터를 결합한다.
+ */
+public class ZipExample01 {
+	public static void main(String[] args) {
+		Flux
+			.zip(
+				Flux.just(1, 2, 3, 5).delayElements(Duration.ofMillis(300L)),
+				Flux.just(4, 5, 6).delayElements(Duration.ofMillis(500L))
+			)
+			.subscribe(Logger::onNext);
+
+		TimeUtils.sleep(2500L);
+	}
+}
