@@ -1,8 +1,6 @@
-package org.jamin.reactive02.section03.class08;
+package org.jamin.reactive02.section03.class07.class08;
 
 import reactor.core.publisher.Flux;
-
-import java.util.stream.Collectors;
 
 import org.jamin.reactive02.common.SampleData;
 import org.jamin.reactive02.utils.Logger;

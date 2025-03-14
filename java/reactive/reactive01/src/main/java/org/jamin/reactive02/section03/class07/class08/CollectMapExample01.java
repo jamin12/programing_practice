@@ -1,4 +1,4 @@
-package org.jamin.reactive02.section03.class08;
+package org.jamin.reactive02.section03.class07.class08;
 
 import org.jamin.reactive02.common.SampleData;
 import org.jamin.reactive02.utils.Logger;
