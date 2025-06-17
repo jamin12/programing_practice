@@ -20,6 +20,13 @@ spec:
           image: nginx:stable
           ports:
             - containerPort: 80
+          resources:
+            requests:
+              cpu: "1000"
+              memory: "1000Gi"
+            limits:
+              cpu: "1000"
+              memory: "1000Gi"
 
 ---
 apiVersion: v1
