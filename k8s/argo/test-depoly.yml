@@ -19,7 +19,6 @@ spec:
       containers:
         - name: nginx
           image: nginx:stable
-          command: ["/bin/sh", "-c"]
           ports:
             - containerPort: 80
 ---
