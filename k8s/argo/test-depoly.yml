@@ -20,8 +20,6 @@ spec:
         - name: nginx
           image: nginx:stable
           command: ["/bin/sh", "-c"]
-          args:
-            - sleep 20 && nginx -g 'daemon off;'
           ports:
             - containerPort: 80
 ---
