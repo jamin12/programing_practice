@@ -21,7 +21,7 @@ spec:
           image: nginx:stable
           command: ["/bin/sh", "-c"]
           args:
-            - sleep 180 && nginx -g 'daemon off;'
+            - sleep 181 && nginx -g 'daemon off;'
           ports:
             - containerPort: 80
           readinessProbe:
